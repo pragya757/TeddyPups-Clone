@@ -111,7 +111,6 @@ export default function MeetThePups() {
   const [floorX, setFloorX] = useState(0);
   const [hoveredIdx, setHoveredIdx] = useState(null);
   const [activeCenterIdx, setActiveCenterIdx] = useState(0);
-  const [selectedPup, setSelectedPup] = useState(null);
 
   // Handle sticky horizontal scrolling
   useEffect(() => {
@@ -262,15 +261,10 @@ export default function MeetThePups() {
                     onMouseEnter={() => setHoveredIdx(idx)}
                     onMouseLeave={() => setHoveredIdx(null)}
                   >
-                    <div
-                      className="tp-door__link group block text-center cursor-pointer select-none"
+                    <Link
+                      className="tp-door__link group block text-center select-none"
                       style={{ "--door": door.color }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedPup(door);
-                      }}
-                      role="button"
-                      tabIndex={0}
+                      href={`/puppies/${door.slug}`}
                       aria-label={`View about ${door.name}`}
                     >
                       {/* Name & metadata above door */}
@@ -337,7 +331,7 @@ export default function MeetThePups() {
                           Available
                         </span>
                       </div>
-                    </div>
+                    </Link>
                   </li>
                 );
               })}
@@ -460,108 +454,6 @@ export default function MeetThePups() {
           </div>
         </div>
       </div>
-
-      {/* "About this Puppy" Interactive Modal Popup */}
-      {selectedPup && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cocoa/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setSelectedPup(null)}
-        >
-          <div
-            className="relative w-full max-w-2xl bg-[#fffdf8] rounded-3xl border-4 border-cocoa shadow-2xl overflow-hidden p-6 md:p-8"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              boxShadow: '10px 14px 0 #2a170e',
-            }}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setSelectedPup(null)}
-              className="absolute top-5 right-5 z-20 size-10 rounded-full border-2 border-cocoa bg-[#fff8ea] text-cocoa font-bold text-xl flex items-center justify-center hover:bg-honey transition-colors"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-
-            <div className="flex flex-col md:flex-row gap-6 items-center">
-              {/* Puppy Image Chamber */}
-              <div
-                className="relative size-56 md:size-64 rounded-2xl border-3 border-cocoa overflow-hidden shrink-0 shadow-md"
-                style={{ backgroundColor: selectedPup.color }}
-              >
-                <Image
-                  src={selectedPup.image}
-                  alt={selectedPup.name}
-                  fill
-                  className="object-cover"
-                />
-                <span className="absolute top-3 left-3 rounded-full bg-milk/95 px-3 py-1 text-xs font-bold text-cocoa border border-cocoa/30 shadow-sm font-scrawl">
-                  Available now
-                </span>
-              </div>
-
-              {/* Info & Story */}
-              <div className="flex-1 text-left">
-                <span className="inline-block text-xs font-bold tracking-wider uppercase text-toffee mb-1 font-scrawl">
-                  {selectedPup.origin}
-                </span>
-                <h3 className="font-plush text-3xl font-extrabold text-cocoa">
-                  {selectedPup.name}
-                </h3>
-                <div className="flex flex-wrap gap-2 my-2 text-xs font-bold text-cocoa/80">
-                  <span className="px-2.5 py-1 bg-[#fbe3b4] rounded-full border border-cocoa/20">
-                    {selectedPup.breed}
-                  </span>
-                  <span className="px-2.5 py-1 bg-[#fbe3b4] rounded-full border border-cocoa/20">
-                    {selectedPup.gender}
-                  </span>
-                  <span className="px-2.5 py-1 bg-[#fbe3b4] rounded-full border border-cocoa/20">
-                    {selectedPup.age}
-                  </span>
-                </div>
-
-                <p className="text-sm text-cocoa/85 leading-relaxed mt-3">
-                  {selectedPup.desc}
-                </p>
-
-                {/* Health Perks */}
-                <div className="grid grid-cols-2 gap-2 mt-4 text-xs font-semibold text-cocoa/80">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-toffee font-bold">✓</span> Vet Health Certified
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-toffee font-bold">✓</span> Microchipped
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-toffee font-bold">✓</span> Vaccinations Complete
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-toffee font-bold">✓</span> Health Passport
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                  <a
-                    href={`https://wa.me/919898124987?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20${encodeURIComponent(selectedPup.name)}%20(${encodeURIComponent(selectedPup.breed)}).%20Please%20share%20details%20and%20videos.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary flex-1 justify-center rounded-full bg-[#1f7a4d] px-5 py-3 text-sm font-bold text-milk shadow-md hover:bg-[#18623d] transition-all text-center"
-                  >
-                    Enquire on WhatsApp
-                  </a>
-                  <Link
-                    href={`/puppies/${selectedPup.slug}`}
-                    className="btn btn-ghost flex-1 justify-center rounded-full border-2 border-cocoa px-5 py-3 text-sm font-bold text-cocoa hover:bg-cocoa hover:text-milk transition-all text-center"
-                  >
-                    Full Profile →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
