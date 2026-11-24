@@ -180,4 +180,22 @@ html[data-pup] .tp-footer.is-snug .tp-basket .pup-stop > .pup-buddy {
   object-fit: cover;
 }
 
+/* Circular boundary for all puppy sketches */
+.tp-sketch__photo {
+  border-radius: 50% !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  -webkit-clip-path: circle(50% at 50% 50%) !important;
+  overflow: hidden !important;
+  inset: 5% !important;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.tp-sketch__photo img {
+  border-radius: 50% !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  -webkit-clip-path: circle(50% at 50% 50%) !important;
+  object-fit: cover !important;
+}
+
+
 

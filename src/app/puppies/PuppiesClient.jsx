@@ -376,14 +376,22 @@ export default function PuppiesClient({ initialPuppies }) {
                         <circle cx="100" cy="100" r="92" />
                       </svg>
 
-                      {/* Photo */}
-                      <span className="tp-sketch__photo">
+                      {/* Photo with circular boundary */}
+                      <span
+                        className="tp-sketch__photo rounded-full overflow-hidden"
+                        style={{
+                          borderRadius: '50%',
+                          clipPath: 'circle(50% at 50% 50%)',
+                          overflow: 'hidden',
+                        }}
+                      >
                         <Image
                           src={mainImg}
                           alt={`${cleanName}, ${pup.breed}`}
                           fill
                           sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 220px"
-                          className="object-cover"
+                          className="object-cover rounded-full"
+                          style={{ borderRadius: '50%' }}
                           priority={idx < 5}
                         />
                       </span>
@@ -488,13 +496,21 @@ export default function PuppiesClient({ initialPuppies }) {
                     <svg className="tp-sketch__wash" viewBox="0 0 200 200" aria-hidden="true">
                       <circle cx="100" cy="100" r="92" />
                     </svg>
-                    <span className="tp-sketch__photo">
+                    <span
+                      className="tp-sketch__photo rounded-full overflow-hidden"
+                      style={{
+                        borderRadius: '50%',
+                        clipPath: 'circle(50% at 50% 50%)',
+                        overflow: 'hidden',
+                      }}
+                    >
                       <Image
                         src={item.src}
                         alt={item.name}
                         fill
                         sizes="120px"
-                        className="object-cover"
+                        className="object-cover rounded-full"
+                        style={{ borderRadius: '50%' }}
                       />
                     </span>
                     <svg className="tp-sketch__ink" viewBox="0 0 200 200" aria-hidden="true">
