@@ -32,3 +32,34 @@
 .pup-actor .tp-runner.is-walking .tp-runner__ear {
   animation: 0.16s ease-in-out infinite alternate tp-runner-ear !important;
 }
+
+/* Best friend doorway & door interaction */
+.tp-house__door {
+  transform-origin: 0 !important;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html[data-pup] .tp-home[data-visited="true"] .tp-house__door,
+html[data-pup] .tp-home[data-here="true"] .tp-house__door,
+html[data-pup] .tp-home.is-door-open .tp-house__door,
+.tp-home.is-door-open .tp-house__door,
+.tp-home:hover .tp-house__door,
+.tp-house__doorway:hover .tp-house__door {
+  transform: rotateY(-102deg) !important;
+}
+
+/* Basket puppy appearance & animation */
+html[data-pup] .tp-basket[data-visited="true"] .pup-stop > .pup-buddy,
+html[data-pup] .tp-basket[data-here="true"] .pup-stop > .pup-buddy,
+html[data-pup] .tp-basket.is-snug .pup-stop > .pup-buddy,
+html[data-pup] .tp-footer[data-visited="true"] .tp-basket .pup-stop > .pup-buddy,
+html[data-pup] .tp-footer.is-snug .tp-basket .pup-stop > .pup-buddy {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: opacity 0.4s ease-in, visibility 0.4s ease-in;
+}
+
+.tp-basket__pup .pup-buddy {
+  transition: opacity 0.4s ease-in, visibility 0.4s ease-in;
+}
+

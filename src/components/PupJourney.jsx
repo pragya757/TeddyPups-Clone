@@ -45,7 +45,7 @@ export default function PupJourney() {
       // Find stops bounding rects relative to viewport
       const stopData = stops.map((el) => {
         const rect = el.getBoundingClientRect();
-        const scene = el.closest('[data-pup-scene]');
+        const scene = el.closest('[data-pup-scene]') || el.closest('.tp-scene') || el.closest('.tp-home') || el.closest('.tp-footer');
         return {
           el,
           scene,
@@ -71,13 +71,44 @@ export default function PupJourney() {
         }
       });
 
+      // Elements
+      const homeScene = document.querySelector('.tp-home');
+      const basketEl = document.querySelector('.tp-basket');
+      const footerScene = document.querySelector('.tp-footer');
+      const basketStopIdx = stopData.length - 1;
+
+      // Check proximity to best friend house (.tp-home): open door on approach
+      if (homeScene) {
+        const homeRect = homeScene.getBoundingClientRect();
+        if (homeRect.top < window.innerHeight * 0.85 && homeRect.bottom > 60) {
+          homeScene.dataset.visited = 'true';
+          homeScene.classList.add('is-door-open');
+        } else if (homeRect.top >= window.innerHeight * 0.95) {
+          homeScene.classList.remove('is-door-open');
+        }
+      }
+
       // Special case: top of the page (Hero)
       if (scrollY < 120) {
         activeIdx = 0;
       }
-      // Special case: bottom of the page (Footer)
-      if (docHeight > 0 && scrollY >= docHeight - 80) {
-        activeIdx = stopData.length - 1;
+      
+      // Special case: bottom of the page (Footer basket)
+      const isAtBottom = docHeight > 0 && (scrollY >= docHeight - 140 || (basketEl && basketEl.getBoundingClientRect().top < window.innerHeight * 0.85));
+      if (isAtBottom) {
+        activeIdx = basketStopIdx;
+        if (basketEl) {
+          basketEl.dataset.visited = 'true';
+          basketEl.classList.add('is-snug');
+        }
+        if (footerScene) {
+          footerScene.dataset.visited = 'true';
+          footerScene.dataset.here = 'true';
+        }
+      } else {
+        if (basketEl && activeIdx < basketStopIdx) {
+          basketEl.classList.remove('is-snug');
+        }
       }
 
       const activeStop = stopData[activeIdx];
@@ -98,15 +129,18 @@ export default function PupJourney() {
         setPose('peek');
         setShowBubble(true);
         setBubbleText('hm?');
-      } else if (activeIdx === stopData.length - 1 && scrollY >= docHeight - 80) {
+        if (actorRef.current) actorRef.current.style.opacity = '1';
+      } else if (activeIdx === basketStopIdx && isAtBottom) {
         // Footer: snug in basket
         setIsFront(false);
         setPose('snug');
         setShowBubble(false);
+        if (actorRef.current) actorRef.current.style.opacity = '0';
       } else {
         // Floating / traveling in view
         setIsFront(true);
         setPose(activeStop.pose || 'sit');
+        if (actorRef.current) actorRef.current.style.opacity = '1';
       }
 
       // Position actor
@@ -148,14 +182,28 @@ export default function PupJourney() {
         if (activeIdx === 0 && window.scrollY < 120) {
           setIsFront(false);
           setPose('peek');
-        } else if (activeIdx === stopData.length - 1) {
+          if (actorRef.current) actorRef.current.style.opacity = '1';
+        } else if (activeIdx === basketStopIdx && (window.scrollY >= docHeight - 140 || activeIdx === basketStopIdx)) {
           setIsFront(false);
           setPose('snug');
+          if (actorRef.current) actorRef.current.style.opacity = '0';
+          if (basketEl) {
+            basketEl.dataset.visited = 'true';
+            basketEl.classList.add('is-snug');
+          }
         } else {
           setPose(activeStop.pose);
+          if (actorRef.current) actorRef.current.style.opacity = '1';
         }
       }, 160);
     };
+
+    const doorway = document.querySelector('.tp-house__doorway');
+    const handleDoorwayClick = () => {
+      const h = document.querySelector('.tp-home');
+      if (h) h.classList.toggle('is-door-open');
+    };
+    if (doorway) doorway.addEventListener('click', handleDoorwayClick);
 
     window.addEventListener('scroll', updateCompanion, { passive: true });
     window.addEventListener('resize', updateCompanion);
@@ -164,6 +212,7 @@ export default function PupJourney() {
     setTimeout(updateCompanion, 100);
 
     return () => {
+      if (doorway) doorway.removeEventListener('click', handleDoorwayClick);
       window.removeEventListener('scroll', updateCompanion);
       window.removeEventListener('resize', updateCompanion);
       clearTimeout(scrollTimeoutRef.current);
