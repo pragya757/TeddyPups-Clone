@@ -2,47 +2,18 @@
 
 import happyFamiliesData from '@/data/happy_families.json';
 
-const TILTS = [-1.8, 1.4, -1.2, 2.1, -1.5, 1.9, -2.2, 1.6, -1.1, 1.7, -1.9, 1.3];
-
-const TAPE_COLORS = [
-  '#f9cdbf', // blush pink
-  '#f6d79a', // honey beige
-  '#bfddf5', // soft sky blue
-  '#e9dcc4', // parchment
-  '#f9cdbf', // blush pink
-  '#f6d79a', // honey beige
-  '#bfddf5', // soft sky blue
-  '#e9dcc4', // parchment
-];
-
-const TAPE_VARIANTS = [
-  'tp-tape--center',
+const TILTS = ['-2.2deg', '1.6deg', '-0.9deg', '2.4deg', '-1.5deg', '0.8deg', '-2.6deg', '1.2deg'];
+const TAPES = ['#f6d79a', '#f9cdbf', '#cfe5f6', '#f6d79a', '#e9dcc4', '#f6d79a', '#f9cdbf', '#cfe5f6'];
+const TAPE_CLASSES = [
   'tp-tape--center',
   'tp-tape--left',
+  'tp-tape--right',
+  'tp-tape--tl',
   'tp-tape--center',
   'tp-tape--right',
+  'tp-tape--left',
   'tp-tape--center',
 ];
-
-// Specific known captions matching reference site & lovely moments
-const SPECIAL_CAPTIONS = {
-  3: 'Lulu 🧸 with her new mummy ❤️',
-  7: 'Adorable Maltipoo baby 🧸❤️',
-  10: 'My new teddy puppy 🥰🧸',
-  15: 'Our new puppies 🧸🥰🤗',
-  17: 'New puppy 🧸😍',
-  22: 'Gang of 3 😍🧸',
-  24: 'So happy 😍😍',
-  29: 'Forever home 🐾❤️',
-  35: 'New pup 🤗💫',
-  38: 'Best cuddle buddy 🧸🥰',
-  41: 'In love with our little boy ❤️',
-  47: 'Sweet teacup princess 🧸💫',
-  50: 'Our happy little family 🥰',
-  53: 'Welcome home Leo 🐾',
-  57: 'Little bundle of joy ❤️',
-  62: 'Pure love 🧸❤️',
-};
 
 export default function HappyFamiliesPage() {
   return (
@@ -88,75 +59,78 @@ export default function HappyFamiliesPage() {
             </div>
           </header>
 
-          {/* 64 Polaroid Photo Wall */}
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-14 gap-x-6 sm:gap-x-8 lg:gap-x-10 items-start">
-            {happyFamiliesData.map((item, idx) => {
-              const tilt = TILTS[idx % TILTS.length];
-              const tapeColor = TAPE_COLORS[idx % TAPE_COLORS.length];
-              const tapeVariant = TAPE_VARIANTS[idx % TAPE_VARIANTS.length];
-              const caption = SPECIAL_CAPTIONS[idx] || (item.caption && item.caption.trim());
+          {/* 64 Polaroid Photo Wall - Masonry Column Layout */}
+          <div className="mt-16 md:mt-20">
+            <ul className="tp-wall" aria-label="Photos from TeddyPups families">
+              {happyFamiliesData.map((item, idx) => {
+                const tilt = TILTS[idx % TILTS.length];
+                const tapeColor = TAPES[idx % TAPES.length];
+                const tapeClass = TAPE_CLASSES[idx % TAPE_CLASSES.length];
+                const isCornerTape = idx % 8 === 3;
+                const caption = item.caption ? item.caption.trim() : '';
 
-              return (
-                <li
-                  key={item.id || idx}
-                  className={idx % 4 === 1 || idx % 4 === 2 ? 'lg:mt-6' : ''}
-                >
-                  <div
-                    className="tp-polaroid group cursor-pointer"
-                    style={{
-                      '--tilt': `${tilt}deg`,
-                    }}
+                return (
+                  <li
+                    key={item.id || idx}
+                    className="tp-wall__item"
+                    data-reveal="true"
+                    style={{ '--d': `${(idx % 8) * 60}ms` }}
                   >
-                    {/* Washi Tape */}
-                    <span
-                      className={`tp-tape ${tapeVariant}`}
-                      style={{
-                        '--tape': tapeColor,
-                        opacity: 0.9,
-                      }}
-                      aria-hidden="true"
-                    />
-
-                    {/* Photo Container */}
-                    <span
-                      className="tp-polaroid__photo"
-                      style={{
-                        aspectRatio: '4 / 4.8',
-                        width: '100%',
-                        position: 'relative',
-                        display: 'block',
-                        overflow: 'hidden',
-                        borderRadius: '2px',
-                        backgroundColor: '#f0e8dc',
-                      }}
+                    <button
+                      type="button"
+                      className="tp-wall__print"
+                      aria-label={`Open photo ${idx + 1} of ${happyFamiliesData.length}${caption ? ': ' + caption : ''}`}
                     >
-                      <img
-                        src={item.url}
-                        alt={item.alt || 'Happy TeddyPups family with their new puppy'}
-                        loading={idx < 8 ? 'eager' : 'lazy'}
-                        decoding="async"
+                      <span
+                        className="tp-polaroid"
                         style={{
-                          position: 'absolute',
-                          inset: 0,
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          display: 'block',
-                          transition: 'transform 0.4s ease',
+                          '--tilt': tilt,
+                          '--tape': tapeColor,
+                          '--i': idx,
                         }}
-                        className="group-hover:scale-105"
-                      />
-                    </span>
+                      >
+                        {/* Washi Tape */}
+                        {isCornerTape ? (
+                          <>
+                            <span aria-hidden="true" className="tp-tape tp-tape--tl" />
+                            <span aria-hidden="true" className="tp-tape tp-tape--tr" />
+                          </>
+                        ) : (
+                          <span aria-hidden="true" className={`tp-tape ${tapeClass}`} />
+                        )}
 
-                    {/* Polaroid Bottom Margin / Handwritten Caption */}
-                    <span className="tp-polaroid__caption font-scrawl text-sm md:text-base text-cocoa block min-h-[2.8rem] pt-2.5 pb-1 px-1 text-center font-bold">
-                      {caption || ''}
-                    </span>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                        {/* Photo Container - Natural aspect ratio */}
+                        <span className="tp-polaroid__photo">
+                          <img
+                            src={item.url}
+                            alt={item.alt || 'A happy TeddyPups family with their new puppy'}
+                            loading={idx < 8 ? 'eager' : 'lazy'}
+                            decoding="async"
+                            style={{
+                              width: '100%',
+                              height: 'auto',
+                              display: 'block',
+                              backgroundColor: item.color || '#e8c8a8',
+                            }}
+                          />
+                        </span>
+
+                        {/* Polaroid Caption */}
+                        <span className="tp-polaroid__caption font-scrawl">
+                          {caption}
+                        </span>
+                      </span>
+
+                      {/* Paw Icon Stamp */}
+                      <svg viewBox="0 0 64 64" className="tp-wall__paw" aria-hidden="true" fill="currentColor">
+                        <path d="M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z" />
+                      </svg>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </section>
     </div>
