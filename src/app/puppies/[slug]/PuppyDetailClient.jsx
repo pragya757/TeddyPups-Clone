@@ -31,7 +31,7 @@ export default function PuppyDetailClient({ puppy }) {
     setFormSubmitted(true);
   };
 
-  const whatsappUrl = `https://wa.me/971500000000?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/919827851210?text=${encodeURIComponent(
     `Hi TeddyPups, I'm inquiring about ${puppy.name} (${puppy.breed}, ${puppy.age}).`
   )}`;
 
@@ -255,7 +255,7 @@ export default function PuppyDetailClient({ puppy }) {
                   <input
                     type="tel"
                     required
-                    placeholder="+971 50 123 4567"
+                    placeholder="+91 98278 51210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full rounded-xl border-2 border-cocoa/30 bg-milk px-4 py-3 text-base text-cocoa outline-none focus:border-cocoa focus:ring-2 focus:ring-honey/50"
@@ -267,7 +267,7 @@ export default function PuppyDetailClient({ puppy }) {
                   </label>
                   <input
                     type="email"
-                    placeholder="sarah@example.com"
+                    placeholder="modzupdates@gmail.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full rounded-xl border-2 border-cocoa/30 bg-milk px-4 py-3 text-base text-cocoa outline-none focus:border-cocoa focus:ring-2 focus:ring-honey/50"

@@ -76,7 +76,7 @@ export default function HappyFamiliesPage() {
                 View Available Puppies
               </a>
               <a
-                href="https://wa.me/971500000000?text=Hi%20TeddyPups%2C%20I'd%20like%20to%20learn%20more."
+                href="https://wa.me/919827851210?text=Hi%20TeddyPups%2C%20I'd%20like%20to%20learn%20more."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-full border-2 border-milk px-8 py-3.5 text-sm font-bold text-milk hover:bg-milk/10 transition-all"

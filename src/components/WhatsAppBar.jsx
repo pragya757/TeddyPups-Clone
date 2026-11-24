@@ -8,7 +8,7 @@ export default function WhatsAppBar() {
     >
       <div className="flex items-center gap-2">
         <a
-          href="https://wa.me/971500000000?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy."
+          href="https://wa.me/919827851210?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy."
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#25D366] py-3 text-sm font-bold text-white shadow-sm active:scale-[0.98] transition-transform"
@@ -19,7 +19,7 @@ export default function WhatsAppBar() {
           <span>WhatsApp us</span>
         </a>
         <a
-          href="tel:+971500000000"
+          href="tel:+919827851210"
           className="flex items-center justify-center gap-1.5 rounded-full border-2 border-cocoa bg-milk px-5 py-3 text-sm font-bold text-cocoa active:bg-sand transition-colors"
         >
           <svg viewBox="0 0 24 24" className="size-4 fill-none stroke-current stroke-2" aria-hidden="true">

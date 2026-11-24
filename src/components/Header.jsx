@@ -85,7 +85,7 @@ export default function Header() {
         {/* Right CTA */}
         <div className="tp-header__end flex items-center gap-3">
           <a
-            href="https://wa.me/971500000000?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy."
+            href="https://wa.me/919827851210?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy."
             className="tp-header__wa hidden md:inline-flex items-center justify-center rounded-full bg-[#1b6b3e] px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-[#165a34] transition-all"
             target="_blank"
             rel="noopener noreferrer"
@@ -156,14 +156,14 @@ export default function Header() {
 
           <div className="space-y-3 pt-4 border-t border-cocoa/15">
             <a
-              href="https://wa.me/971500000000?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy."
+              href="https://wa.me/919827851210?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy."
               className="btn btn-whatsapp w-full flex items-center justify-center gap-2 rounded-full bg-[#1b6b3e] py-3 text-base font-bold text-white shadow-sm"
               target="_blank"
               rel="noopener noreferrer"
             >
               WhatsApp us
             </a>
-            <p className="text-center text-sm font-medium text-cocoa/80">+971 50 000 0000</p>
+            <p className="text-center text-sm font-medium text-cocoa/80">+91 98278 51210</p>
           </div>
         </div>
       )}

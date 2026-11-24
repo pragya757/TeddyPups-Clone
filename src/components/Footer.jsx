@@ -109,13 +109,13 @@ export default function Footer() {
           <h2 className="font-scrawl text-lg text-honey">Say hello</h2>
           <ul className="mt-4 space-y-2.5 text-milk/90">
             <li>
-              <a className="font-semibold hover:text-honey" href="https://wa.me/971500000000?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy." target="_blank" rel="noopener noreferrer">
-                WhatsApp +971 50 000 0000
+              <a className="font-semibold hover:text-honey" href="https://wa.me/919827851210?text=Hi%20TeddyPups%2C%20I'm%20interested%20in%20a%20puppy." target="_blank" rel="noopener noreferrer">
+                WhatsApp +91 98278 51210
               </a>
             </li>
             <li>
-              <a className="break-all hover:text-honey" href="mailto:hello@teddypups.ae">
-                hello@teddypups.ae
+              <a className="break-all hover:text-honey" href="mailto:modzupdates@gmail.com">
+                modzupdates@gmail.com
               </a>
             </li>
             <li className="text-milk/70">Downtown Dubai, United Arab Emirates</li>
